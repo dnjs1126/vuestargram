@@ -1,7 +1,5 @@
 <template>
   <p>왜 안되는거냐 </p>
-  <p>왜 안되는거냐 </p>
-  <p>왜 안되는거냐 </p>
 </template>
 
 <script>
