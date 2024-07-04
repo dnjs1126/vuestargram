@@ -127,8 +127,17 @@ ul {
   border-left: 1px solid #eee;
 }
 .the{
-  border: 0px;
-    background-color: #7d1414;
-    color: white;
+  border: none; 
+  background-color: skyblue; 
+  color: white; 
+  padding: 5px 5px;
+  font-size: 13px; 
+  cursor: pointer;
+  border-radius: 5px; 
+  outline: none; 
+}
+
+.the:hover {
+  background-color: #007bff; 
 }
 </style>
