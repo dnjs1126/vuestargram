@@ -9,7 +9,7 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
   <Container :instaData="instaData"/>
-
+  <button class="the" @click="more">더보기</button>
   <div class="footer">
     <ul class="footer-button-plus">
       <input type="file" id="file" class="inputfile" />
@@ -20,18 +20,33 @@
 <script>
 import Container from './components/Container.vue'
 import data from './assets/data.js'
-
+import axios from 'axios';
 export default {
   name: 'App',
   data() {
     return {
-      instaData:data
+      instaData:data,
+      clickNum : 0,
     }
   },
   components: {
     Container,
+  },
+  methods:{
+    more(){
+      axios.get(`https://codingapple1.github.io/vue/more${this.clickNum}.json`)
+        .then(result=>{
+          console.log(this)
+          this.instaData.push(result.data)
+          this.clickNum++;
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+    }
   }
 }
+
 </script>
 
 <style>
@@ -110,5 +125,10 @@ ul {
   position: relative;
   border-right: 1px solid #eee;
   border-left: 1px solid #eee;
+}
+.the{
+  border: 0px;
+    background-color: #7d1414;
+    color: white;
 }
 </style>
