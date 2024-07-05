@@ -2,10 +2,15 @@
   <div>
     <div class="header">
       <ul class="header-button-left">
-        <li @click="step = 0">Cancel</li>
+        <div v-if="step>0">
+          <li @click="step--">Cancel</li>
+        </div>
       </ul>
       <ul class="header-button-right">
-        <li @click="nextStep">Next</li>
+        <div v-if="step<2">
+          <li @click="step++">Next</li>
+        </div>
+        <li v-if="step == 2" @click="publish">발행</li>
       </ul>
       <img src="./assets/logo.png" class="logo" />
     </div>
@@ -14,13 +19,13 @@
     <button @click="step = 1">버튼2</button>
     <button @click="step = 2">버튼3</button>
     
-    <Container :instaData="instaData" :step="step" />
+    <Container :instaData="instaData" :step="step" :img="img" @write="write=$event"/>
     
     <button class="the" @click="more">더보기</button>
     
     <div class="footer">
       <ul class="footer-button-plus">
-        <input type="file" id="file" class="inputfile" />
+        <input @change="upload" type="file" id="file" class="inputfile" />
         <label for="file" class="input-plus">+</label>
       </ul>
     </div>
@@ -36,7 +41,9 @@ export default {
     return {
       step: 0,
       instaData:data,
-      clickNum:0
+      clickNum:0,
+      img: '',
+      write:'',
     };
   },
   methods:{
@@ -50,6 +57,27 @@ export default {
         .catch(err=>{
           console.log(err)
         })
+    },
+    upload(e){
+      let file = e.target.files;
+      console.log(file)
+      let url = URL.createObjectURL(file[0]);
+      this.img=url;
+      this.step++;
+    },
+    publish(){
+      let myPost = {
+        name: "Kim Hyun",
+        userImage: "https://picsum.photos/100?random=3",
+        postImage: this.img,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: this.write,
+        filter: "perpetua"
+      };
+      this.instaData.unshift(myPost);
+      this.step=0;
     }
   },
   components: {
